@@ -58,13 +58,13 @@ export async function POST(request: NextRequest) {
               <div style="color: #6b7280; font-size: 14px;">
                 <p><strong>Learn Academy</strong><br>
                 Learning for a Changing World</p>
-                <p>📧 contact@learnacademy.co.uk<br>
-                📱 WhatsApp: <a href="https://wa.me/447958575757">+44 7958 575757</a><br>
+                <p>📧 admin@learn-academy.co.uk<br>
+                📱 WhatsApp: <a href="https://wa.me/447779602503">+44 7779 602503</a><br>
                 🌐 <a href="https://learnacademy.co.uk">learnacademy.co.uk</a></p>
               </div>
             </div>
           `,
-          text: `Learn Academy Email Test\n\nThis is a test email to verify email functionality.\n\nTimestamp: ${new Date().toISOString()}\nFrom: ${process.env.EMAIL_FROM}\nTo: ${to}\n\nIf you received this email, your email configuration is working correctly!\n\nLearn Academy\ncontact@learnacademy.co.uk`,
+          text: `Learn Academy Email Test\n\nThis is a test email to verify email functionality.\n\nTimestamp: ${new Date().toISOString()}\nFrom: ${process.env.EMAIL_FROM}\nTo: ${to}\n\nIf you received this email, your email configuration is working correctly!\n\nLearn Academy\nadmin@learn-academy.co.uk`,
         };
         break;
 

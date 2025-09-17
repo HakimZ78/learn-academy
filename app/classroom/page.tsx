@@ -231,7 +231,7 @@ export default function VirtualClassroom() {
                 Having trouble joining your session? We're here to help.
               </p>
               <a
-                href="https://wa.me/447958575757?text=Hello%2C%20I%20need%20help%20with%20joining%20my%20virtual%20classroom%20session"
+                href="https://wa.me/447779602503?text=Hello%2C%20I%20need%20help%20with%20joining%20my%20virtual%20classroom%20session"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary shadow-lg inline-block"

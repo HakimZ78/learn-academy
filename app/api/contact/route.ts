@@ -64,14 +64,14 @@ async function sendContactFormEmail(formData: any) {
             <strong>Quick Actions:</strong><br>
             • Reply to: <a href="mailto:${formData.email}?subject=Re: ${encodeURIComponent(formData.subject)}" style="color: #1e3a8a;">Email Response</a><br>
             ${formData.phone ? `• Call: <a href="tel:${formData.phone}" style="color: #1e3a8a;">${formData.phone}</a><br>` : ""}
-            • WhatsApp: <a href="https://wa.me/447958575757?text=Hi, regarding your enquiry about ${encodeURIComponent(formData.subject)}" style="color: #1e3a8a;">Send WhatsApp</a>
+            • WhatsApp: <a href="https://wa.me/447779602503?text=Hi, regarding your enquiry about ${encodeURIComponent(formData.subject)}" style="color: #1e3a8a;">Send WhatsApp</a>
           </p>
         </div>
       </div>
       
       <div style="text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px;">
         <p>Learn Academy Contact Form System<br>
-        Powered by secure IONOS SMTP • ${timestamp}</p>
+        Powered by Resend • ${timestamp}</p>
       </div>
     </div>
   `;
@@ -89,7 +89,7 @@ Message:
 ${formData.message}
 
 Quick Reply: mailto:${formData.email}?subject=Re: ${encodeURIComponent(formData.subject)}
-${formData.phone ? `Call: tel:${formData.phone}\n` : ""}WhatsApp: https://wa.me/447958575757
+${formData.phone ? `Call: tel:${formData.phone}\n` : ""}WhatsApp: https://wa.me/447779602503
 
 Learn Academy Contact Form System
 ${timestamp}
