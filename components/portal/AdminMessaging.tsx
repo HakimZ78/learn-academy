@@ -83,11 +83,53 @@ export default function AdminMessaging({
     "messages",
   );
   const [searchTerm, setSearchTerm] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleLogout = async () => {
     setLoggingOut(true);
     await supabase.auth.signOut();
     router.push("/portal/login");
+  };
+
+  const handleDeleteMessage = async (messageId: string) => {
+    if (!confirm("Are you sure you want to delete this message?")) {
+      return;
+    }
+
+    setDeletingId(messageId);
+    try {
+      // Delete related message recipients first
+      const { error: recipientsError } = await supabase
+        .from("message_recipients")
+        .delete()
+        .eq("message_id", messageId);
+
+      if (recipientsError) {
+        console.error("Error deleting message recipients:", recipientsError);
+        alert("Failed to delete message recipients");
+        return;
+      }
+
+      // Then delete the message
+      const { error: messageError } = await supabase
+        .from("admin_messages")
+        .delete()
+        .eq("id", messageId);
+
+      if (messageError) {
+        console.error("Error deleting message:", messageError);
+        alert("Failed to delete message");
+        return;
+      }
+
+      // Refresh the page to update the list
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting message:", error);
+      alert("An error occurred while deleting the message");
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
@@ -399,8 +441,16 @@ export default function AdminMessaging({
                           <button className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded">
                             <Edit className="w-4 h-4" />
                           </button>
-                          <button className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-gray-100 rounded">
-                            <Trash className="w-4 h-4" />
+                          <button
+                            onClick={() => handleDeleteMessage(message.id)}
+                            disabled={deletingId === message.id}
+                            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-gray-100 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {deletingId === message.id ? (
+                              <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <Trash className="w-4 h-4" />
+                            )}
                           </button>
                         </div>
                       </div>
