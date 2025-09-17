@@ -72,7 +72,7 @@ export default function Navigation() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -82,7 +82,7 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <div className="flex items-center space-x-3 ml-4">
+            <div className="flex items-center space-x-3">
               {user ? (
                 <>
                   <Link
@@ -104,12 +104,7 @@ export default function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    asChild
-                    className="border-academy-secondary text-academy-secondary hover:bg-academy-secondary hover:text-white transition-colors"
-                  >
+                  <Button variant="outline" size="sm" asChild>
                     <Link href="/portal/login">
                       Student Login
                     </Link>
@@ -171,11 +166,7 @@ export default function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button
-                    variant="outline"
-                    asChild
-                    className="w-full border-academy-secondary text-academy-secondary hover:bg-academy-secondary hover:text-white transition-colors"
-                  >
+                  <Button variant="outline" asChild className="w-full">
                     <Link
                       href="/portal/login"
                       onClick={() => setIsOpen(false)}
