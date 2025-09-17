@@ -1,6 +1,6 @@
 /**
  * Email Test API Endpoint
- * Learn Academy - Test email functionality with IONOS SMTP
+ * Learn Academy - Test email functionality with Resend
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -39,13 +39,13 @@ export async function POST(request: NextRequest) {
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h1 style="color: #1e3a8a;">✅ Email Test Successful!</h1>
-              <p>This is a test email from Learn Academy to verify IONOS SMTP functionality.</p>
+              <p>This is a test email from Learn Academy to verify email functionality.</p>
               
               <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <h3>Test Details:</h3>
                 <ul>
                   <li><strong>Timestamp:</strong> ${new Date().toISOString()}</li>
-                  <li><strong>SMTP Provider:</strong> IONOS</li>
+                  <li><strong>Email Provider:</strong> Resend</li>
                   <li><strong>From:</strong> ${process.env.EMAIL_FROM}</li>
                   <li><strong>To:</strong> ${to}</li>
                 </ul>
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
               </div>
             </div>
           `,
-          text: `Learn Academy Email Test\n\nThis is a test email to verify IONOS SMTP functionality.\n\nTimestamp: ${new Date().toISOString()}\nFrom: ${process.env.EMAIL_FROM}\nTo: ${to}\n\nIf you received this email, your email configuration is working correctly!\n\nLearn Academy\ncontact@learnacademy.co.uk`,
+          text: `Learn Academy Email Test\n\nThis is a test email to verify email functionality.\n\nTimestamp: ${new Date().toISOString()}\nFrom: ${process.env.EMAIL_FROM}\nTo: ${to}\n\nIf you received this email, your email configuration is working correctly!\n\nLearn Academy\ncontact@learnacademy.co.uk`,
         };
         break;
 
@@ -165,7 +165,7 @@ export async function POST(request: NextRequest) {
         emailType: type,
         recipient: to,
         messageId: result.messageId,
-        smtpHost: process.env.EMAIL_HOST,
+        emailProvider: "Resend",
         testSuccessful: true,
       },
     });
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
         recipient: to,
         messageId: result.messageId,
         timestamp: new Date().toISOString(),
-        smtpProvider: "IONOS",
+        emailProvider: "Resend",
       },
     });
   } catch (error) {
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
       responseTime: Date.now() - startTime,
       metadata: {
         error: error instanceof Error ? error.message : "Unknown error",
-        smtpHost: process.env.EMAIL_HOST,
+        emailProvider: "Resend",
         testSuccessful: false,
       },
     });
@@ -222,16 +222,11 @@ export async function GET(request: NextRequest) {
 
   try {
     const emailConfig = {
-      configured: !!(
-        process.env.EMAIL_HOST &&
-        process.env.EMAIL_USER &&
-        process.env.EMAIL_PASSWORD
-      ),
-      provider: process.env.EMAIL_HOST || "Not configured",
-      fromAddress: process.env.EMAIL_FROM || "Not configured",
-      port: process.env.EMAIL_PORT || "Not configured",
-      secure: process.env.EMAIL_PORT === "465",
-      lastUpdated: "September 14, 2025 - IONOS port issue resolved",
+      configured: !!process.env.RESEND_API_KEY,
+      provider: "Resend",
+      fromAddress: process.env.RESEND_FROM_EMAIL || "Not configured",
+      fromName: process.env.RESEND_FROM_NAME || "Learn Academy",
+      lastUpdated: "September 17, 2025 - Switched to Resend API",
     };
 
     await logApiEvent({

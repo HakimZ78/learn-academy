@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,28 +29,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Create nodemailer transporter using port 25
-    const nodemailer = require("nodemailer");
-
-    // Port 25 typically doesn't require authentication when sending from localhost
-    const transportConfig: any = {
-      host: process.env.EMAIL_HOST,
-      port: parseInt(process.env.EMAIL_PORT || "25"),
-      secure: false, // Port 25 is not secure
-      tls: {
-        rejectUnauthorized: false, // For development with self-signed certificates
-      },
-    };
-
-    // Only add auth if password is provided (port 25 usually doesn't need it)
-    if (process.env.EMAIL_PASSWORD) {
-      transportConfig.auth = {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      };
-    }
-
-    const transporter = nodemailer.createTransport(transportConfig);
 
     // Enhanced email content with academy branding
     const emailContent = `
@@ -108,11 +87,7 @@ ${content}
     // Send emails to all recipients
     for (const recipient of recipients) {
       try {
-        await transporter.sendMail({
-          from: {
-            name: "Learn Academy",
-            address: process.env.EMAIL_USER || "admin@learn-academy.co.uk",
-          },
+        await sendEmail({
           to: recipient.email,
           subject: subject,
           html: emailContent,
