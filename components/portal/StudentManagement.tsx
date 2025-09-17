@@ -77,17 +77,9 @@ export default function StudentManagement({ students: initialStudents }: Student
         return;
       }
 
-      // If student has a user account, deactivate it (we can't delete users from client)
+      // If student has a user account, we can log it but can't delete from client
       if (userId) {
-        // Update the profile to mark as deleted
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .update({ deleted_at: new Date().toISOString() })
-          .eq("id", userId);
-
-        if (profileError) {
-          console.error("Error marking profile as deleted:", profileError);
-        }
+        console.log("Note: User account exists for student. Manual deletion may be required in Supabase dashboard.");
       }
 
       // Update local state to remove the deleted student
