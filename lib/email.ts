@@ -16,13 +16,26 @@ export async function sendEmail(options: EmailOptions) {
     const fromEmail = options.from || process.env.RESEND_FROM_EMAIL || 'admin@learn-academy.co.uk';
     const fromName = process.env.RESEND_FROM_NAME || 'Learn Academy';
 
-    const result = await resend.emails.send({
+    // Ensure at least one of html or text is provided
+    const emailData: any = {
       from: `${fromName} <${fromEmail}>`,
       to: Array.isArray(options.to) ? options.to : [options.to],
       subject: options.subject,
-      text: options.text,
-      html: options.html,
-    });
+    };
+
+    if (options.html) {
+      emailData.html = options.html;
+    }
+    if (options.text) {
+      emailData.text = options.text;
+    }
+
+    // If neither html nor text is provided, use a default text message
+    if (!options.html && !options.text) {
+      emailData.text = 'This is an automated message from Learn Academy.';
+    }
+
+    const result = await resend.emails.send(emailData);
 
     console.log("✅ Email sent via Resend:", result.data?.id);
     return { success: true, messageId: result.data?.id };
