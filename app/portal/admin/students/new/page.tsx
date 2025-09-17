@@ -56,7 +56,7 @@ export default function NewStudentPage() {
             email: formData.email,
             password: formData.password,
             options: {
-              emailRedirectTo: `${window.location.origin}/portal/login`,
+              emailRedirectTo: `https://learn-academy.co.uk/portal/login`,
               data: {
                 full_name: formData.fullName,
               },
