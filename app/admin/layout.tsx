@@ -7,5 +7,16 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminProvider>{children}</AdminProvider>;
+  return (
+    <AdminProvider>
+      <div className="admin-layout">
+        <style jsx global>{`
+          .admin-layout nav[class*="fixed top-0"] {
+            display: none !important;
+          }
+        `}</style>
+        {children}
+      </div>
+    </AdminProvider>
+  );
 }

@@ -64,7 +64,7 @@ export default function Navigation() {
   return (
     <nav className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
             <GraduationCap className="h-8 w-8 text-blue-600" />
             <span className="font-display font-bold text-xl gradient-text">
@@ -72,16 +72,18 @@ export default function Navigation() {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-gray-700 hover:text-academy-primary transition-colors font-medium"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center justify-between flex-1 ml-8 mr-8">
+            <div className="flex items-center justify-evenly flex-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-700 hover:text-academy-primary transition-colors font-medium"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
             <div className="flex items-center space-x-3">
               {user ? (
                 <>
@@ -104,7 +106,11 @@ export default function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="sm" asChild>
+                  <Button
+                    size="sm"
+                    asChild
+                    className="bg-academy-secondary text-white hover:bg-white hover:text-academy-secondary hover:border-academy-secondary border transition-colors"
+                  >
                     <Link href="/portal/login">
                       Student Login
                     </Link>
@@ -166,7 +172,10 @@ export default function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" asChild className="w-full">
+                  <Button
+                    asChild
+                    className="w-full bg-academy-secondary text-white hover:bg-white hover:text-academy-secondary hover:border-academy-secondary border transition-colors"
+                  >
                     <Link
                       href="/portal/login"
                       onClick={() => setIsOpen(false)}
