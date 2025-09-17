@@ -1,18 +1,7 @@
-import nodemailer from "nodemailer";
+import { Resend } from 'resend';
 
-// Create reusable transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: parseInt(process.env.EMAIL_PORT || "587"),
-  secure: false, // Use STARTTLS
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false, // Accept self-signed certificates
-  },
-});
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export interface EmailOptions {
   to: string | string[];
@@ -24,19 +13,22 @@ export interface EmailOptions {
 
 export async function sendEmail(options: EmailOptions) {
   try {
-    const info = await transporter.sendMail({
-      from: options.from || process.env.EMAIL_FROM,
-      to: options.to,
+    const fromEmail = options.from || process.env.RESEND_FROM_EMAIL || 'admin@learn-academy.co.uk';
+    const fromName = process.env.RESEND_FROM_NAME || 'Learn Academy';
+
+    const result = await resend.emails.send({
+      from: `${fromName} <${fromEmail}>`,
+      to: Array.isArray(options.to) ? options.to : [options.to],
       subject: options.subject,
       text: options.text,
       html: options.html,
     });
 
-    console.log("Email sent:", info.messageId);
-    return { success: true, messageId: info.messageId };
+    console.log("✅ Email sent via Resend:", result.data?.id);
+    return { success: true, messageId: result.data?.id };
   } catch (error) {
-    console.error("Email error:", error);
-    throw new Error(`Failed to send email: ${error}`);
+    console.error("❌ Resend email error:", error);
+    throw new Error(`Failed to send email to ${options.to}: ${error}`);
   }
 }
 
@@ -51,11 +43,11 @@ export const emailTemplates = {
       <h3>Your Login Details:</h3>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Password:</strong> ${password}</p>
-      <p><a href="http://217.154.33.169/">Access your email</a></p>
+      <p><a href="https://learn-academy.co.uk/portal/login">Access your portal</a></p>
       <hr>
-      <p>For technical support: <a href="https://wa.me/447958575757">WhatsApp Support</a></p>
+      <p>For technical support: <a href="https://wa.me/447779602503">WhatsApp Support</a></p>
     `,
-    text: `Welcome ${studentName}! Your account: ${email} / ${password}. Access: http://217.154.33.169/`,
+    text: `Welcome ${studentName}! Your account: ${email} / ${password}. Access: https://learn-academy.co.uk/portal/login`,
   }),
 
   // Assignment notification
@@ -70,9 +62,9 @@ export const emailTemplates = {
       <p>Hi ${studentName},</p>
       <p>You have a new assignment: <strong>${assignment}</strong></p>
       <p><strong>Due Date:</strong> ${dueDate}</p>
-      <p><a href="http://217.154.33.169/">Check your academy email for details</a></p>
+      <p><a href="https://learn-academy.co.uk/portal/dashboard">Check your portal for details</a></p>
     `,
-    text: `Hi ${studentName}, new assignment: ${assignment}. Due: ${dueDate}. Check your academy email.`,
+    text: `Hi ${studentName}, new assignment: ${assignment}. Due: ${dueDate}. Check your portal.`,
   }),
 
   // Parent notification
@@ -82,10 +74,10 @@ export const emailTemplates = {
       <h2>Student Update</h2>
       <p>Dear ${parentName},</p>
       <p>${message}</p>
-      <p><a href="http://217.154.33.169/">Access your parent portal</a></p>
+      <p><a href="https://learn-academy.co.uk/contact">Contact us for more information</a></p>
       <hr>
       <p>Learn Academy Team</p>
     `,
-    text: `Dear ${parentName}, ${message}. Access portal: http://217.154.33.169/`,
+    text: `Dear ${parentName}, ${message}. Contact: https://learn-academy.co.uk/contact`,
   }),
 };
