@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X, GraduationCap, LogOut, User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,36 +92,41 @@ export default function Navigation() {
                     <User className="w-4 h-4" />
                     {isAdmin ? "Admin Portal" : "Student Portal"}
                   </Link>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleLogout}
-                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
                   >
                     <LogOut className="w-4 h-4" />
                     Logout
-                  </button>
+                  </Button>
                 </>
               ) : (
                 <>
-                  <Link
-                    href="/portal/login"
-                    className="text-academy-primary hover:text-academy-secondary transition-colors font-medium border border-academy-primary hover:border-academy-secondary px-3 py-1.5 rounded-lg text-sm"
-                  >
-                    Student Login
-                  </Link>
-                  <Link href="/enrol" className="btn-primary text-sm">
-                    Enrol Now
-                  </Link>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/portal/login">
+                      Student Login
+                    </Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/enrol">
+                      Enrol Now
+                    </Link>
+                  </Button>
                 </>
               )}
             </div>
           </div>
 
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-gray-700"
+            className="md:hidden"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          </Button>
         </div>
 
         {isOpen && (
@@ -146,33 +152,36 @@ export default function Navigation() {
                     <User className="w-4 h-4" />
                     {isAdmin ? "Admin Portal" : "Student Portal"}
                   </Link>
-                  <button
+                  <Button
+                    variant="ghost"
                     onClick={() => {
                       handleLogout();
                       setIsOpen(false);
                     }}
-                    className="flex items-center justify-center gap-2 text-gray-600 hover:text-gray-900 transition-colors font-medium px-3 py-2 rounded-lg text-sm"
+                    className="flex items-center justify-center gap-2 w-full"
                   >
                     <LogOut className="w-4 h-4" />
                     Logout
-                  </button>
+                  </Button>
                 </>
               ) : (
                 <>
-                  <Link
-                    href="/portal/login"
-                    className="text-academy-primary hover:text-academy-secondary transition-colors font-medium border border-academy-primary hover:border-academy-secondary px-3 py-2 rounded-lg text-sm text-center"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Student Login
-                  </Link>
-                  <Link
-                    href="/enrol"
-                    className="btn-primary text-sm text-center"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Enrol Now
-                  </Link>
+                  <Button variant="outline" asChild className="w-full">
+                    <Link
+                      href="/portal/login"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Student Login
+                    </Link>
+                  </Button>
+                  <Button asChild className="w-full">
+                    <Link
+                      href="/enrol"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Enrol Now
+                    </Link>
+                  </Button>
                 </>
               )}
             </div>

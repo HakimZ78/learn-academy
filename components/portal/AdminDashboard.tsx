@@ -22,6 +22,9 @@ import {
   BarChart3,
   Clock,
 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 interface AdminDashboardProps {
   stats: {
@@ -63,25 +66,25 @@ export default function AdminDashboard({
     router.push("/portal/login");
   };
 
-  const getSubjectColor = (subject: string) => {
-    const colors: Record<string, string> = {
-      biology: "bg-green-100 text-green-800",
-      chemistry: "bg-blue-100 text-blue-800",
-      physics: "bg-purple-100 text-purple-800",
-      mathematics: "bg-yellow-100 text-yellow-800",
-      english: "bg-pink-100 text-pink-800",
+  const getSubjectVariant = (subject: string): "default" | "secondary" | "destructive" | "outline" => {
+    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+      biology: "default",
+      chemistry: "secondary",
+      physics: "outline",
+      mathematics: "destructive",
+      english: "secondary",
     };
-    return colors[subject] || "bg-gray-100 text-gray-800";
+    return variants[subject] || "outline";
   };
 
-  const getProgramColor = (program: string) => {
-    const colors: Record<string, string> = {
-      foundation: "bg-blue-100 text-blue-800",
-      elevate: "bg-purple-100 text-purple-800",
-      gcse: "bg-green-100 text-green-800",
-      "a-level": "bg-red-100 text-red-800",
+  const getProgramVariant = (program: string): "default" | "secondary" | "destructive" | "outline" => {
+    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+      foundation: "default",
+      elevate: "secondary",
+      gcse: "outline",
+      "a-level": "destructive",
     };
-    return colors[program] || "bg-gray-100 text-gray-800";
+    return variants[program] || "outline";
   };
 
   return (
@@ -104,21 +107,21 @@ export default function AdminDashboard({
             </div>
 
             <div className="flex items-center gap-4">
-              <Link
-                href="/"
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                <Home className="w-4 h-4" />
-                Main Site
-              </Link>
-              <button
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/">
+                  <Home className="w-4 h-4 mr-2" />
+                  Main Site
+                </Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={handleLogout}
                 disabled={loggingOut}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-4 h-4 mr-2" />
                 {loggingOut ? "Logging out..." : "Logout"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -137,41 +140,47 @@ export default function AdminDashboard({
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-600" />
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
+                <span className="text-3xl font-bold text-gray-900">
+                  {stats.students}
+                </span>
               </div>
-              <span className="text-3xl font-bold text-gray-900">
-                {stats.students}
-              </span>
-            </div>
-            <h3 className="text-gray-600 font-medium">Active Students</h3>
-          </div>
+              <CardTitle className="text-gray-600 font-medium text-base">Active Students</CardTitle>
+            </CardContent>
+          </Card>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <FileText className="w-6 h-6 text-green-600" />
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <FileText className="w-6 h-6 text-green-600" />
+                </div>
+                <span className="text-3xl font-bold text-gray-900">
+                  {stats.materials}
+                </span>
               </div>
-              <span className="text-3xl font-bold text-gray-900">
-                {stats.materials}
-              </span>
-            </div>
-            <h3 className="text-gray-600 font-medium">Materials</h3>
-          </div>
+              <CardTitle className="text-gray-600 font-medium text-base">Materials</CardTitle>
+            </CardContent>
+          </Card>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-purple-600" />
+                </div>
+                <span className="text-3xl font-bold text-gray-900">
+                  {stats.assignments}
+                </span>
               </div>
-              <span className="text-3xl font-bold text-gray-900">
-                {stats.assignments}
-              </span>
-            </div>
-            <h3 className="text-gray-600 font-medium">Assignments</h3>
-          </div>
+              <CardTitle className="text-gray-600 font-medium text-base">Assignments</CardTitle>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Quick Actions */}
@@ -210,7 +219,7 @@ export default function AdminDashboard({
         </div>
 
         {/* Tabs */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+        <Card>
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-6" aria-label="Tabs">
               {[
@@ -258,11 +267,9 @@ export default function AdminDashboard({
                             {student.email}
                           </p>
                         </div>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${getProgramColor(student.program_type)}`}
-                        >
+                        <Badge variant={getProgramVariant(student.program_type)}>
                           {student.program_type}
-                        </span>
+                        </Badge>
                       </div>
                     ))}
                     {recentStudents.length === 0 && (
@@ -289,11 +296,9 @@ export default function AdminDashboard({
                             {material.title}
                           </p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span
-                              className={`px-2 py-0.5 rounded-full text-xs font-medium ${getSubjectColor(material.subject)}`}
-                            >
+                            <Badge variant={getSubjectVariant(material.subject)}>
                               {material.subject}
-                            </span>
+                            </Badge>
                             <span className="text-xs text-gray-500">
                               {material.program_level}
                             </span>
@@ -334,12 +339,11 @@ export default function AdminDashboard({
                       Filter
                     </button>
                   </div>
-                  <Link
-                    href="/portal/admin/students"
-                    className="px-4 py-2 bg-academy-primary text-white rounded-lg hover:bg-academy-secondary transition-colors"
-                  >
-                    Manage Students
-                  </Link>
+                  <Button asChild>
+                    <Link href="/portal/admin/students">
+                      Manage Students
+                    </Link>
+                  </Button>
                 </div>
                 <p className="text-gray-500">
                   Full student management available in dedicated page
@@ -364,12 +368,11 @@ export default function AdminDashboard({
                       Filter
                     </button>
                   </div>
-                  <Link
-                    href="/portal/admin/materials"
-                    className="px-4 py-2 bg-academy-primary text-white rounded-lg hover:bg-academy-secondary transition-colors"
-                  >
-                    Manage Materials
-                  </Link>
+                  <Button asChild>
+                    <Link href="/portal/admin/materials">
+                      Manage Materials
+                    </Link>
+                  </Button>
                 </div>
                 <p className="text-gray-500">
                   Full material management available in dedicated page
@@ -383,12 +386,11 @@ export default function AdminDashboard({
                   <h3 className="text-lg font-medium text-gray-900">
                     Assignment Management
                   </h3>
-                  <Link
-                    href="/portal/admin/assignments"
-                    className="px-4 py-2 bg-academy-primary text-white rounded-lg hover:bg-academy-secondary transition-colors"
-                  >
-                    Manage Assignments
-                  </Link>
+                  <Button asChild>
+                    <Link href="/portal/admin/assignments">
+                      Manage Assignments
+                    </Link>
+                  </Button>
                 </div>
                 <p className="text-gray-500">
                   Create and manage student assignments in the dedicated page
@@ -403,18 +405,16 @@ export default function AdminDashboard({
                     Message Center
                   </h3>
                   <div className="flex gap-3">
-                    <Link
-                      href="/portal/admin/messages/compose"
-                      className="px-4 py-2 bg-academy-primary text-white rounded-lg hover:bg-academy-secondary transition-colors"
-                    >
-                      Compose Message
-                    </Link>
-                    <Link
-                      href="/portal/admin/messages"
-                      className="px-4 py-2 border border-academy-primary text-academy-primary rounded-lg hover:bg-academy-light transition-colors"
-                    >
-                      View All Messages
-                    </Link>
+                    <Button asChild>
+                      <Link href="/portal/admin/messages/compose">
+                        Compose Message
+                      </Link>
+                    </Button>
+                    <Button variant="outline" asChild>
+                      <Link href="/portal/admin/messages">
+                        View All Messages
+                      </Link>
+                    </Button>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -510,7 +510,7 @@ export default function AdminDashboard({
               </div>
             )}
           </div>
-        </div>
+        </Card>
       </main>
     </div>
   );

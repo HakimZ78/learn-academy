@@ -11,6 +11,11 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { validateContactForm } from "@/lib/validation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -80,9 +85,7 @@ export default function ContactPage() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -92,6 +95,21 @@ export default function ContactPage() {
     });
 
     // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    // Clear error when user makes selection
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -215,43 +233,32 @@ export default function ContactPage() {
                     </div>
                   )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-semibold text-gray-700 mb-2"
-                      >
+                    <div className="space-y-2">
+                      <Label htmlFor="fullName">
                         Parent/Guardian Name *
-                      </label>
-                      <input
-                        type="text"
+                      </Label>
+                      <Input
                         id="fullName"
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleChange}
                         required
                         maxLength={100}
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors.fullName
-                            ? "border-red-300 bg-red-50"
-                            : "border-gray-300"
-                        }`}
                         placeholder="Your full name"
+                        className={errors.fullName ? "border-red-300 bg-red-50" : ""}
                       />
                       {errors.fullName && (
-                        <p className="text-sm text-red-600 mt-1">
+                        <p className="text-sm text-red-600">
                           {errors.fullName}
                         </p>
                       )}
                     </div>
 
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-semibold text-gray-700 mb-2"
-                      >
+                    <div className="space-y-2">
+                      <Label htmlFor="email">
                         Email Address *
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         type="email"
                         id="email"
                         name="email"
@@ -259,15 +266,11 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         maxLength={255}
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors.email
-                            ? "border-red-300 bg-red-50"
-                            : "border-gray-300"
-                        }`}
                         placeholder="your.email@example.com"
+                        className={errors.email ? "border-red-300 bg-red-50" : ""}
                       />
                       {errors.email && (
-                        <p className="text-sm text-red-600 mt-1">
+                        <p className="text-sm text-red-600">
                           {errors.email}
                         </p>
                       )}
@@ -275,106 +278,89 @@ export default function ContactPage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-semibold text-gray-700 mb-2"
-                      >
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">
                         Phone Number
-                      </label>
-                      <input
+                      </Label>
+                      <Input
                         type="tel"
                         id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                          errors.phone
-                            ? "border-red-300 bg-red-50"
-                            : "border-gray-300"
-                        }`}
                         placeholder="07123 456789 or +44 20 1234 5678"
+                        className={errors.phone ? "border-red-300 bg-red-50" : ""}
                       />
                       {errors.phone && (
-                        <p className="text-sm text-red-600 mt-1">
+                        <p className="text-sm text-red-600">
                           {errors.phone}
                         </p>
                       )}
                     </div>
 
-                    <div>
-                      <label
-                        htmlFor="preferredContact"
-                        className="block text-sm font-semibold text-gray-700 mb-2"
-                      >
+                    <div className="space-y-2">
+                      <Label htmlFor="preferredContact">
                         Preferred Contact Method
-                      </label>
-                      <select
-                        id="preferredContact"
-                        name="preferredContact"
+                      </Label>
+                      <Select
                         value={formData.preferredContact}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        onValueChange={(value) => handleSelectChange("preferredContact", value)}
                       >
-                        <option value="email">Email</option>
-                        <option value="phone">Phone</option>
-                        <option value="either">Either</option>
-                      </select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select method" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="email">Email</SelectItem>
+                          <SelectItem value="phone">Phone</SelectItem>
+                          <SelectItem value="either">Either</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">
                       Subject / Program of Interest *
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
+                    </Label>
+                    <Select
                       value={formData.subject}
-                      onChange={handleChange}
+                      onValueChange={(value) => handleSelectChange("subject", value)}
                       required
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        errors.subject
-                          ? "border-red-300 bg-red-50"
-                          : "border-gray-300"
-                      }`}
                     >
-                      <option value="">Select a program or topic</option>
-                      <option value="Foundation Program (Ages 8-11)">
-                        Foundation Program (Ages 8-11)
-                      </option>
-                      <option value="Elevate Program (Ages 11-14)">
-                        Elevate Program (Ages 11-14)
-                      </option>
-                      <option value="Excel Program (Ages 14-16)">
-                        Excel Program (Ages 14-16)
-                      </option>
-                      <option value="Advanced Program (Ages 16-18)">
-                        Advanced Program (Ages 16-18)
-                      </option>
-                      <option value="General Inquiry">General Inquiry</option>
-                      <option value="Free Consultation">
-                        Free Consultation
-                      </option>
-                    </select>
+                      <SelectTrigger className={errors.subject ? "border-red-300 bg-red-50" : ""}>
+                        <SelectValue placeholder="Select a program or topic" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Foundation Program (Ages 8-11)">
+                          Foundation Program (Ages 8-11)
+                        </SelectItem>
+                        <SelectItem value="Elevate Program (Ages 11-14)">
+                          Elevate Program (Ages 11-14)
+                        </SelectItem>
+                        <SelectItem value="Excel Program (Ages 14-16)">
+                          Excel Program (Ages 14-16)
+                        </SelectItem>
+                        <SelectItem value="Advanced Program (Ages 16-18)">
+                          Advanced Program (Ages 16-18)
+                        </SelectItem>
+                        <SelectItem value="General Inquiry">General Inquiry</SelectItem>
+                        <SelectItem value="Free Consultation">
+                          Free Consultation
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     {errors.subject && (
-                      <p className="text-sm text-red-600 mt-1">
+                      <p className="text-sm text-red-600">
                         {errors.subject}
                       </p>
                     )}
                   </div>
 
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
+                  <div className="space-y-2">
+                    <Label htmlFor="message">
                       Message
-                    </label>
-                    <textarea
+                    </Label>
+                    <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
@@ -383,15 +369,11 @@ export default function ContactPage() {
                       required
                       minLength={10}
                       maxLength={2000}
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        errors.message
-                          ? "border-red-300 bg-red-50"
-                          : "border-gray-300"
-                      }`}
                       placeholder="Tell us about your child's needs, interests, or any questions you have... (minimum 10 characters)"
-                    ></textarea>
+                      className={errors.message ? "border-red-300 bg-red-50" : ""}
+                    />
                     {errors.message && (
-                      <p className="text-sm text-red-600 mt-1">
+                      <p className="text-sm text-red-600">
                         {errors.message}
                       </p>
                     )}
@@ -400,14 +382,11 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center ${
-                      isSubmitting
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "btn-primary hover:shadow-lg"
-                    }`}
+                    className="w-full py-4"
+                    size="lg"
                   >
                     {isSubmitting ? (
                       <>
@@ -420,7 +399,7 @@ export default function ContactPage() {
                         Send Message
                       </>
                     )}
-                  </button>
+                  </Button>
 
                   <p className="text-sm text-gray-500 text-center">
                     We'll respond within 24 hours to schedule your free

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Badge } from "@/components/ui/badge";
 import {
   BookOpen,
   Home,
@@ -89,24 +90,24 @@ export default function AdminMessaging({
     router.push("/portal/login");
   };
 
-  const getStatusColor = (status: string) => {
-    const colors: Record<string, string> = {
-      draft: "bg-gray-100 text-gray-800",
-      scheduled: "bg-blue-100 text-blue-800",
-      sent: "bg-green-100 text-green-800",
-      failed: "bg-red-100 text-red-800",
+  const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
+    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+      draft: "outline",
+      scheduled: "secondary",
+      sent: "default",
+      failed: "destructive",
     };
-    return colors[status] || "bg-gray-100 text-gray-800";
+    return variants[status] || "outline";
   };
 
-  const getPriorityColor = (priority: string) => {
-    const colors: Record<string, string> = {
-      low: "bg-gray-100 text-gray-800",
-      normal: "bg-blue-100 text-blue-800",
-      high: "bg-yellow-100 text-yellow-800",
-      urgent: "bg-red-100 text-red-800",
+  const getPriorityVariant = (priority: string): "default" | "secondary" | "destructive" | "outline" => {
+    const variants: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+      low: "outline",
+      normal: "secondary",
+      high: "default",
+      urgent: "destructive",
     };
-    return colors[priority] || "bg-blue-100 text-blue-800";
+    return variants[priority] || "secondary";
   };
 
   const formatDate = (dateString: string) => {
@@ -366,16 +367,12 @@ export default function AdminMessaging({
                             <h3 className="font-medium text-gray-900">
                               {message.subject}
                             </h3>
-                            <span
-                              className={`px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(message.status)}`}
-                            >
+                            <Badge variant={getStatusVariant(message.status)}>
                               {message.status}
-                            </span>
-                            <span
-                              className={`px-2 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(message.priority)}`}
-                            >
+                            </Badge>
+                            <Badge variant={getPriorityVariant(message.priority)}>
                               {message.priority}
-                            </span>
+                            </Badge>
                           </div>
                           <p className="text-gray-600 text-sm mb-2 line-clamp-2">
                             {message.content}

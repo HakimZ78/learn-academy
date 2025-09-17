@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Development files - exclude from repository
+*.md
+*.sh
+
+# Additional exclusions
+logs/
+JDPS*.pdf
