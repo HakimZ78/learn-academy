@@ -17,8 +17,8 @@ export default function Programs() {
         "Core subject mastery",
       ],
       schedule: "4 Sessions/month",
-      sessionTime: "50 minutes per session",
-      price: "£60/month",
+      sessionTime: "60 minutes per session",
+      price: "£80/month",
       color: "from-blue-500 to-cyan-500",
     },
     {
@@ -33,7 +33,7 @@ export default function Programs() {
       ],
       schedule: "4 Sessions/month",
       sessionTime: "1 hour per session",
-      price: "£80/month",
+      price: "£100/month",
       color: "from-purple-500 to-pink-500",
     },
     {
@@ -48,7 +48,7 @@ export default function Programs() {
       ],
       schedule: "4 Sessions/month",
       sessionTime: "1 hour per session",
-      price: "£100/month",
+      price: "£120/month",
       color: "from-green-500 to-teal-500",
     },
     {
@@ -63,7 +63,7 @@ export default function Programs() {
       ],
       schedule: "4 Sessions/month",
       sessionTime: "1 hour per session",
-      price: "£120/month",
+      price: "£140/month",
       color: "from-indigo-500 to-purple-600",
     },
   ];
