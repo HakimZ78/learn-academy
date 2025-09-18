@@ -22,7 +22,7 @@ export default function ProgramsPage() {
       description:
         "Building strong fundamentals in core National Curriculum subjects & towards 11+, setting the stage for accelerated learning.",
       duration: "50 minute sessions",
-      groupSize: "Pre & post session homework",
+      groupSize: "Set Homework",
       price: "4 Sessions/month £60",
       bgImage:
         "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022", // Young children learning
@@ -63,7 +63,7 @@ export default function ProgramsPage() {
           ],
         },
       ],
-      keySkills: ["Critical thinking & reasoning", "Independent learning"],
+      keySkills: ["Critical thinking & reasoning", "Learning skills"],
       outcomes: [
         "Strong foundation for accelerated KS3 learning",
         "Confidence in tackling challenging problems",
@@ -77,7 +77,7 @@ export default function ProgramsPage() {
       description:
         "Accelerated learning programme designed to get students prepared well for GCSE's by age 14.",
       duration: "1 hour sessions",
-      groupSize: "Pre & post session homework",
+      groupSize: "Post session homework",
       price: "4 Sessions/Month £80",
       bgImage:
         "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2004", // Teenagers studying
