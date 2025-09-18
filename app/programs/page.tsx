@@ -21,9 +21,9 @@ export default function ProgramsPage() {
       ageGroup: "Ages 8-11 (Key Stage 2)",
       description:
         "Building strong fundamentals in core National Curriculum subjects & towards 11+, setting the stage for accelerated learning.",
-      duration: "50 minute sessions",
+      duration: "60 minute sessions",
       groupSize: "Set Homework",
-      price: "4 Sessions/month £60",
+      price: "4 Sessions/month £80",
       bgImage:
         "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022", // Young children learning
       curriculum: [
@@ -77,8 +77,8 @@ export default function ProgramsPage() {
       description:
         "Accelerated learning programme designed to get students prepared well for GCSE's by age 14.",
       duration: "1 hour sessions",
-      groupSize: "Post session homework",
-      price: "4 Sessions/Month £80",
+      groupSize: "Pre & Post session homework",
+      price: "4 Sessions/Month £100",
       bgImage:
         "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2004", // Teenagers studying
       curriculum: [
@@ -130,8 +130,8 @@ export default function ProgramsPage() {
       description:
         "Comprehensive GCSE preparation programme focused on achieving excellent results in core subjects.\n\nSubjects offered: Mathematics, Biology, Chemistry, Physics",
       duration: "1 hour sessions",
-      groupSize: "Pre & post session homework",
-      price: "4 Sessions/Month £100",
+      groupSize: "Pre & Post session homework",
+      price: "4 Sessions/Month £120",
       bgImage:
         "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070", // Students taking exams
       curriculum: [
@@ -186,7 +186,7 @@ export default function ProgramsPage() {
         "Advanced study programme specialising in the sciences, preparing students for university and future careers.\n\nSubjects offered: Biology, Chemistry, Physics",
       duration: "1 hour sessions",
       groupSize: "Pre & post session homework",
-      price: "4 Sessions/Month £120",
+      price: "4 Sessions/Month £140",
       bgImage:
         "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070", // University/advanced students
       curriculum: [

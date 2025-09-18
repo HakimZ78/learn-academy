@@ -71,7 +71,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 text-gray-400 mt-0.5" />
-                <span className="text-gray-400">info@learn-academy.co.uk</span>
+                <span className="text-gray-400">admin@learn-academy.co.uk</span>
               </li>
               <li className="flex items-start space-x-3">
                 <Phone className="h-5 w-5 text-gray-400 mt-0.5" />

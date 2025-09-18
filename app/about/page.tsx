@@ -69,16 +69,16 @@ export default function AboutPage() {
                   Meet Your Educator
                 </h2>
                 <p className="text-lg text-gray-700 mb-4">
-                  I'm Hakim, a multi-talented professional with a unique journey
+                  I'm Zaehid Hakim, a multi-talented professional with a unique journey
                   from healthcare to technology, business & education, bringing
                   together diverse expertise to create an extraordinary learning
                   environment.
                 </p>
                 <p className="text-lg text-gray-700 mb-4">
                   I am both a qualified Optometrist & Pharmacist, involved in
-                  business as well active in home-schooling. I have also
-                  self-taught Computer Science skills enabling me to build
-                  useful applications and web-apps. This interdisciplinary
+                  business as well active in home-schooling. I have self-taught
+                  Computer Science skills enabling me to build useful
+                  applications and web-apps. This interdisciplinary
                   experience allows me to show students how different fields
                   connect and complement each other in the real world.
                 </p>
