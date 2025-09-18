@@ -76,8 +76,8 @@ export default function AboutPage() {
                 </p>
                 <p className="text-lg text-gray-700 mb-4">
                   I am both a qualified Optometrist & Pharmacist, involved in
-                  business as well active in home-schooling. I have self-taught
-                  Computer Science skills enabling me to build useful
+                  business as well active in home-schooling. As an avid learner I have 
+                  self-taught Computer Science skills enabling me to build useful
                   applications and web-apps. This interdisciplinary
                   experience allows me to show students how different fields
                   connect and complement each other in the real world.
@@ -87,7 +87,7 @@ export default function AboutPage() {
                   valuable education is one that breaks down artificial barriers
                   between subjects and prepares students to think critically,
                   adapt quickly, and solve academic problems efficiently. I love
-                  learning new things and genuinely want every child to achieve
+                  learning new things and genuinely want every student to achieve
                   their potential! You can read more about my background through
                   my professional background web links.
                 </p>
