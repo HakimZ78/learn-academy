@@ -174,7 +174,7 @@ export default function ContactPage() {
     {
       question: "What is your fee structure?",
       answer:
-        "Foundation: £60/month, Elevate: £80/month, GCSE: £100/month, A-Level: £120/month. Payment plans available.",
+        "Foundation: £80/month, Elevate: £100/month, GCSE: £120/month, A-Level: £140/month. Payment plans available.",
     },
   ];
 
