@@ -33,14 +33,14 @@ export default function EnrolPage() {
     {
       id: "foundation",
       name: "Foundation Program (Ages 8-11)",
-      price: "£60/month",
+      price: "80/month",
     },
-    { id: "elevate", name: "Elevate Program (Ages 11-14)", price: "£80/month" },
-    { id: "gcse", name: "GCSE Program (Ages 14-16)", price: "£100/month" },
+    { id: "elevate", name: "Elevate Program (Ages 11-14)", price: "£100/month" },
+    { id: "gcse", name: "GCSE Program (Ages 14-16)", price: "£120/month" },
     {
       id: "a-level",
       name: "A-Level Program (Ages 16-18)",
-      price: "£120/month",
+      price: "£140/month",
     },
   ];
 
