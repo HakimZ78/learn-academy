@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { DataProvider } from "@/contexts/DataContext";
+import { LocalBusinessSchema } from "@/components/StructuredData";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,11 +18,65 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Learn Academy - Learning for a Changing World",
-  description:
-    "Innovative education that breaks down barriers between subjects. Join our semi-classroom tutoring and home schooling services led by a multi-talented professional educator.",
-  keywords:
-    "tutoring, home schooling, interdisciplinary education, innovative learning, personalised education",
+  title: {
+    default: 'Learn Academy - Personalised Tutoring & Home Schooling in Birmingham',
+    template: '%s | Learn Academy'
+  },
+  description: 'Expert 1-on-1 tutoring and home schooling in Birmingham. GCSE, A-Level, and Foundation programs. Breaking down subject barriers with interdisciplinary education for ages 8-18.',
+  keywords: [
+    'tutoring Birmingham',
+    'home schooling Birmingham',
+    'GCSE tutoring',
+    'A-Level tutoring',
+    'personalised education',
+    'interdisciplinary learning',
+    'science tutoring',
+    'mathematics tutoring',
+    'Key Stage 2 tutoring',
+    'Key Stage 3 tutoring',
+    'private tutor Birmingham',
+    'one to one tutoring'
+  ],
+  authors: [{ name: 'Hakim Zaehid' }],
+  creator: 'Learn Academy',
+  publisher: 'Learn Academy',
+  metadataBase: new URL('https://learnacademy.co.uk'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: 'https://learnacademy.co.uk',
+    siteName: 'Learn Academy',
+    title: 'Learn Academy - Personalised Tutoring & Home Schooling',
+    description: 'Expert 1-on-1 tutoring and home schooling in Birmingham. Interdisciplinary education for ages 8-18.',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Learn Academy - Personalised Education',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Learn Academy - Personalised Tutoring & Home Schooling',
+    description: 'Expert 1-on-1 tutoring and home schooling in Birmingham.',
+    images: ['/images/twitter-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -31,6 +86,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <LocalBusinessSchema />
+      </head>
       <body className={inter.className}>
         <DataProvider>
           <Navigation />

@@ -1,4 +1,28 @@
 import { Code, Brain, Heart, Award, Briefcase, BookOpen } from "lucide-react";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About Hakim - Expert Educator | Optometrist | Pharmacist',
+  description: 'Meet Hakim, a qualified Optometrist and Pharmacist offering innovative interdisciplinary education. DBS certified educator with expertise in healthcare, technology, and business.',
+  keywords: [
+    'Hakim educator Birmingham',
+    'qualified optometrist tutor',
+    'pharmacist educator',
+    'DBS certified tutor',
+    'healthcare education',
+    'interdisciplinary learning',
+    'multi-talented educator'
+  ],
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: 'About Hakim - Expert Multi-Disciplinary Educator',
+    description: 'Qualified Optometrist and Pharmacist bringing unique interdisciplinary expertise to education.',
+    url: 'https://learnacademy.co.uk/about',
+    type: 'profile',
+  },
+}
 
 export default function AboutPage() {
   const expertise = [

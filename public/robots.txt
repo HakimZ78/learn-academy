@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private portal areas
+Disallow: /portal/admin/
+Disallow: /portal/login
+Disallow: /api/
+Disallow: /test*
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /programs
+Allow: /contact
+Allow: /enrol
+Allow: /classroom
+
+Sitemap: https://learnacademy.co.uk/sitemap.xml
