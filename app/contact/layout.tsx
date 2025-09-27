@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Learn Academy - Book Your Consultation',
     description: 'Get in touch for personalised tutoring consultation in Birmingham.',
-    url: 'https://learnacademy.co.uk/contact',
+    url: 'https://learn-academy.co.uk/contact',
   },
 }
 

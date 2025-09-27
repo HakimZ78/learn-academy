@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Hakim - Expert Multi-Disciplinary Educator',
     description: 'Qualified Optometrist and Pharmacist bringing unique interdisciplinary expertise to education.',
-    url: 'https://learnacademy.co.uk/about',
+    url: 'https://learn-academy.co.uk/about',
     type: 'profile',
   },
 }

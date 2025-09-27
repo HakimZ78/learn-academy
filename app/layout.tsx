@@ -40,14 +40,14 @@ export const metadata: Metadata = {
   authors: [{ name: 'Hakim Zaehid' }],
   creator: 'Learn Academy',
   publisher: 'Learn Academy',
-  metadataBase: new URL('https://learnacademy.co.uk'),
+  metadataBase: new URL('https://learn-academy.co.uk'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_GB',
-    url: 'https://learnacademy.co.uk',
+    url: 'https://learn-academy.co.uk',
     siteName: 'Learn Academy',
     title: 'Learn Academy - Personalised Tutoring & Home Schooling',
     description: 'Expert 1-on-1 tutoring and home schooling in Birmingham. Interdisciplinary education for ages 8-18.',

@@ -15,4 +15,4 @@ Allow: /contact
 Allow: /enrol
 Allow: /classroom
 
-Sitemap: https://learnacademy.co.uk/sitemap.xml
+Sitemap: https://learn-academy.co.uk/sitemap.xml

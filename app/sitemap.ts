@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://learnacademy.co.uk'
+  const baseUrl = 'https://learn-academy.co.uk'
 
   return [
     {

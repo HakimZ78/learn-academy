@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Educational Programs - Personalised Tutoring for All Ages',
     description: 'Foundation, GCSE & A-Level programs with 1-on-1 tutoring. From £50/month.',
-    url: 'https://learnacademy.co.uk/programs',
+    url: 'https://learn-academy.co.uk/programs',
   },
 }
 

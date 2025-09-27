@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Virtual Classroom - Learn Academy Online',
     description: 'Interactive online tutoring sessions via Google Meet and Zoom.',
-    url: 'https://learnacademy.co.uk/classroom',
+    url: 'https://learn-academy.co.uk/classroom',
   },
 }
 

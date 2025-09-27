@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Enrol at Learn Academy - Start Your Educational Journey',
     description: 'Quick and easy enrolment for personalised tutoring programs.',
-    url: 'https://learnacademy.co.uk/enrol',
+    url: 'https://learn-academy.co.uk/enrol',
   },
 }
 

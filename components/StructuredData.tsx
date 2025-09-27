@@ -5,7 +5,7 @@ export function LocalBusinessSchema() {
     "name": "Learn Academy",
     "alternateName": "Learn Academy Birmingham",
     "description": "Expert 1-on-1 tutoring and home schooling services in Birmingham offering personalised education for ages 8-18.",
-    "url": "https://learnacademy.co.uk",
+    "url": "https://learn-academy.co.uk",
     "telephone": "07779-602503",
     "email": "info@learnacademy.co.uk",
     "address": {

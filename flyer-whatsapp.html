@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Academy - WhatsApp Flyer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .flyer {
+            width: 1080px;
+            height: 1920px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #7c3aed 100%);
+            position: relative;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 0 2px #333;
+        }
+
+        .pattern {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .website {
+            font-size: 28px;
+            color: rgba(255,255,255,0.95);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            font-size: 36px;
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .educator-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .educator-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .credentials {
+            font-size: 24px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .dbs {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .programs {
+            margin-bottom: 50px;
+        }
+
+        .programs-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .program-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .program-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .age-group {
+            font-size: 22px;
+            color: #7c3aed;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 15px;
+        }
+
+        .sessions {
+            font-size: 20px;
+            color: #6b7280;
+        }
+
+        .features {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .features-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            color: #374151;
+        }
+
+        .checkmark {
+            width: 30px;
+            height: 30px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .checkmark::before {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .cta {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+
+        .cta-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+        }
+
+        .whatsapp-button {
+            background: #25D366;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            padding: 25px 60px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(37,211,102,0.3);
+            margin-bottom: 25px;
+        }
+
+        .phone-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .email {
+            font-size: 28px;
+            color: #6b7280;
+        }
+
+        .special-offer {
+            position: absolute;
+            top: 40px;
+            right: -30px;
+            background: #ef4444;
+            color: white;
+            padding: 15px 60px;
+            font-size: 24px;
+            font-weight: 700;
+            transform: rotate(15deg);
+            box-shadow: 0 5px 20px rgba(239,68,68,0.4);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="flyer">
+        <div class="pattern"></div>
+        <div class="special-offer">LIMITED SPACES!</div>
+        <div class="content">
+            <div class="header">
+                <div class="logo">LEARN ACADEMY</div>
+                <div class="website">www.learn-academy.co.uk</div>
+                <div class="tagline">Learning for a Changing World</div>
+                <div class="subtitle">1-on-1 Personalised Education That Breaks Boundaries</div>
+            </div>
+
+            <div class="highlight-box educator-info">
+                <div class="educator-title">Experienced Mentor Zaehid Hakim</div>
+                <div class="credentials">Qualified Optometrist & Pharmacist</div>
+                <div class="credentials">with Tech Coding Skills</div>
+                <div class="dbs">✓ DBS CERTIFIED</div>
+            </div>
+
+            <div class="programs">
+                <div class="programs-title">Our Programs</div>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <div class="program-name">Foundation</div>
+                        <div class="age-group">Ages 8-11</div>
+                        <div class="price">£80/month</div>
+                        <div class="sessions">4 x 60min sessions</div>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-name">Elevate</div>
+                        <div class="age-group">Ages 11-14</div>
+                        <div class="price">£100/month</div>
+                        <div class="sessions">4 x 60min sessions</div>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-name">Excel (GCSE)</div>
+                        <div class="age-group">Ages 14-16</div>
+                        <div class="price">£120/month</div>
+                        <div class="sessions">4 x 60min sessions</div>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-name">Advanced</div>
+                        <div class="age-group">Ages 16-18</div>
+                        <div class="price">£140/month</div>
+                        <div class="sessions">4 x 60min sessions</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="features-title">Why Choose Learn Academy?</div>
+                <div class="feature-list">
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>Interdisciplinary Learning</span>
+                    </div>
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>1-on-1 Personal Attention</span>
+                    </div>
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>Customised Pacing</span>
+                    </div>
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>Real-World Applications</span>
+                    </div>
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>Critical Thinking Focus</span>
+                    </div>
+                    <div class="feature">
+                        <span class="checkmark"></span>
+                        <span>Individualised Homework</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta">
+                <div class="cta-title">Start Your Learning Journey Today!</div>
+                <div class="whatsapp-button">
+                    <span>💬</span>
+                    <span>WhatsApp Us Now</span>
+                </div>
+                <div class="phone-number">07779-602503</div>
+                <div class="email">admin@learn-academy.co.uk</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
