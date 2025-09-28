@@ -1,0 +1,44 @@
+name: Keep Supabase Active
+
+on:
+  schedule:
+    # Run every 6 hours to ensure the project stays active
+    # Cron format: minute hour day month day-of-week
+    # This runs at 00:00, 06:00, 12:00, 18:00 UTC
+    - cron: '0 */6 * * *'
+
+  # Also allow manual triggering from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Keep-Alive Request
+        run: |
+          response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" "https://learn-academy.co.uk/api/keep-alive")
+          http_status=$(echo "$response" | grep "HTTP_STATUS" | cut -d':' -f2)
+          body=$(echo "$response" | sed '/HTTP_STATUS/d')
+
+          echo "Response: $body"
+          echo "HTTP Status: $http_status"
+
+          if [ "$http_status" != "200" ]; then
+            echo "Keep-alive request failed with status $http_status"
+            exit 1
+          fi
+
+          echo "✅ Keep-alive request successful"
+
+      # Alternative: Use the Node.js script
+      # - name: Checkout repository
+      #   uses: actions/checkout@v3
+
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '20'
+
+      # - name: Run keep-alive script
+      #   run: node scripts/keep-alive.js
