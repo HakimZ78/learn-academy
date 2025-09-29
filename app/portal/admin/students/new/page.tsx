@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -30,7 +29,6 @@ export default function NewStudentPage() {
   const [success, setSuccess] = useState("");
 
   const router = useRouter();
-  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,72 +37,41 @@ export default function NewStudentPage() {
     setSuccess("");
 
     try {
-      let userId = null;
-
-      // Create auth user if requested
-      if (formData.createLogin) {
-        if (!formData.password) {
-          setError("Password is required to create login");
-          setLoading(false);
-          return;
-        }
-
-        // Note: Creating users via client requires admin privileges
-        // In production, you might want to use a server action or edge function
-        const { data: authData, error: authError } = await supabase.auth.signUp(
-          {
-            email: formData.email,
-            password: formData.password,
-            options: {
-              emailRedirectTo: `https://learn-academy.co.uk/portal/login`,
-              data: {
-                full_name: formData.fullName,
-              },
-            },
-          },
-        );
-
-        if (authError) {
-          throw new Error(`Failed to create login: ${authError.message}`);
-        }
-
-        userId = authData.user?.id;
-
-        // Create profile for the new user
-        if (userId) {
-          await (supabase as any).from("profiles").insert({
-            id: userId,
-            role: "student",
-            full_name: formData.fullName,
-          });
-        }
-      }
-
-      // Create student record
-      const { error: studentError } = await (supabase as any)
-        .from("students")
-        .insert({
-          user_id: userId,
+      // Call the server-side API to create the student
+      const response = await fetch("/api/admin/create-student", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
           email: formData.email,
-          full_name: formData.fullName,
-          program_type: formData.programType,
-          date_of_birth: formData.dateOfBirth || null,
-          parent_name: formData.parentName || null,
-          parent_email: formData.parentEmail || null,
-          notes: formData.notes || null,
-          active: true,
-        });
+          programType: formData.programType,
+          dateOfBirth: formData.dateOfBirth,
+          parentName: formData.parentName,
+          parentEmail: formData.parentEmail,
+          notes: formData.notes,
+          createLogin: formData.createLogin,
+          password: formData.password,
+        }),
+      });
 
-      if (studentError) {
-        throw studentError;
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("Error creating student:", result.error);
+        setError(result.error || "Failed to create student");
+        setLoading(false);
+        return;
       }
 
-      setSuccess(`Successfully created student: ${formData.fullName}`);
+      setSuccess(result.message || `Successfully created student: ${formData.fullName}`);
 
       setTimeout(() => {
         router.push("/portal/admin/students");
       }, 2000);
     } catch (err: any) {
+      console.error("Unexpected error:", err);
       setError(err.message || "Failed to create student");
     } finally {
       setLoading(false);
