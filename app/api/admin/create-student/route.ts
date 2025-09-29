@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         await adminClient.auth.admin.createUser({
           email: email,
           password: password,
-          email_confirm: true, // Auto-confirm email
+          email_confirm: false, // Send confirmation email to student
           user_metadata: {
             full_name: fullName,
           },
