@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 
 export async function DELETE(request: NextRequest) {
   try {
     const supabase = await createClient();
+    const adminClient = createServiceClient();
 
     // Verify admin authentication
     const {
@@ -72,7 +74,7 @@ export async function DELETE(request: NextRequest) {
     // Delete auth user if userId is provided
     if (userId) {
       // Use admin API to delete the user from Supabase Auth
-      const { error: authError } = await supabase.auth.admin.deleteUser(
+      const { error: authError } = await adminClient.auth.admin.deleteUser(
         userId
       );
 

@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
+    const adminClient = createServiceClient();
 
     // Verify admin authentication
     const {
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
 
       // Use admin API to create the user
       const { data: authData, error: authError } =
-        await supabase.auth.admin.createUser({
+        await adminClient.auth.admin.createUser({
           email: email,
           password: password,
           email_confirm: true, // Auto-confirm email
@@ -117,7 +119,7 @@ export async function POST(request: NextRequest) {
 
       // If we created an auth user but student failed, try to clean up
       if (userId) {
-        await supabase.auth.admin.deleteUser(userId);
+        await adminClient.auth.admin.deleteUser(userId);
       }
 
       return NextResponse.json(
