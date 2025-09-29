@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
+import { sendEmail, emailTemplates } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -131,19 +132,22 @@ export async function POST(request: NextRequest) {
     // Send welcome email if login was created
     if (createLogin && userId) {
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://learn-academy.co.uk'}/api/send-email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'welcome-student',
-            to: email,
-            studentName: fullName,
-            email: email,
-            password: password, // NOTE: Sending password in email is a security concern
-          }),
+        const emailContent = emailTemplates.welcomeStudent(
+          fullName,
+          email,
+          password
+        );
+
+        await sendEmail({
+          to: email,
+          subject: emailContent.subject,
+          html: emailContent.html,
+          text: emailContent.text,
         });
+
+        console.log(`✅ Welcome email sent to ${email}`);
       } catch (emailError) {
-        console.error("Failed to send welcome email:", emailError);
+        console.error("❌ Failed to send welcome email:", emailError);
         // Don't fail the whole request if email fails
       }
     }
