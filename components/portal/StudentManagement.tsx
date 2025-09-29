@@ -39,47 +39,31 @@ export default function StudentManagement({ students: initialStudents }: Student
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDeleteStudent = async (studentId: string, userId?: string) => {
-    if (!confirm("Are you sure you want to delete this student? This will also delete all their assignments and materials.")) {
+    if (!confirm("Are you sure you want to delete this student? This will also delete all their assignments, materials, and user account.")) {
       return;
     }
 
     setDeletingId(studentId);
     try {
-      // Delete student assignments first
-      const { error: assignmentsError } = await supabase
-        .from("student_assignments")
-        .delete()
-        .eq("student_id", studentId);
+      // Call the server-side API to delete the student and auth user
+      const response = await fetch("/api/admin/delete-student", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ studentId, userId }),
+      });
 
-      if (assignmentsError) {
-        console.error("Error deleting student assignments:", assignmentsError);
-      }
+      const result = await response.json();
 
-      // Delete student materials
-      const { error: materialsError } = await supabase
-        .from("student_materials")
-        .delete()
-        .eq("student_id", studentId);
-
-      if (materialsError) {
-        console.error("Error deleting student materials:", materialsError);
-      }
-
-      // Delete the student record
-      const { error: studentError } = await supabase
-        .from("students")
-        .delete()
-        .eq("id", studentId);
-
-      if (studentError) {
-        console.error("Error deleting student:", studentError);
-        alert("Failed to delete student. Please try again.");
+      if (!response.ok) {
+        console.error("Error deleting student:", result.error);
+        alert(`Failed to delete student: ${result.error}`);
         return;
       }
 
-      // If student has a user account, we can log it but can't delete from client
-      if (userId) {
-        console.log("Note: User account exists for student. Manual deletion may be required in Supabase dashboard.");
+      if (result.warning) {
+        alert(result.warning);
       }
 
       // Update local state to remove the deleted student
