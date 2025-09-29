@@ -59,12 +59,12 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Use admin API to create the user
+      // Use admin API to create the user with password
       const { data: authData, error: authError } =
         await adminClient.auth.admin.createUser({
           email: email,
           password: password,
-          email_confirm: false, // Send confirmation email to student
+          email_confirm: true, // Auto-confirm so student can login immediately
           user_metadata: {
             full_name: fullName,
           },
@@ -126,6 +126,26 @@ export async function POST(request: NextRequest) {
         { error: `Failed to create student: ${studentError.message}` },
         { status: 400 }
       );
+    }
+
+    // Send welcome email if login was created
+    if (createLogin && userId) {
+      try {
+        await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://learn-academy.co.uk'}/api/send-email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'welcome-student',
+            to: email,
+            studentName: fullName,
+            email: email,
+            password: password, // NOTE: Sending password in email is a security concern
+          }),
+        });
+      } catch (emailError) {
+        console.error("Failed to send welcome email:", emailError);
+        // Don't fail the whole request if email fails
+      }
     }
 
     return NextResponse.json({
