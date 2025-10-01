@@ -95,10 +95,10 @@ export default function MaterialViewer({
   // Prevent right-click
   useEffect(() => {
     const handleContextMenu = (e: any) => {
-      e.preventDefault()(
-        // Log attempt
-        supabase as any,
-      )
+      e.preventDefault();
+
+      // Log attempt
+      (supabase as any)
         .from("access_logs")
         .insert({
           student_id: studentId,
@@ -112,10 +112,10 @@ export default function MaterialViewer({
     const handlePrint = (e: any) => {
       // Prevent Ctrl+P / Cmd+P
       if ((e.ctrlKey || e.metaKey) && e.key === "p") {
-        e.preventDefault()(
-          // Log attempt
-          supabase as any,
-        )
+        e.preventDefault();
+
+        // Log attempt
+        (supabase as any)
           .from("access_logs")
           .insert({
             student_id: studentId,
@@ -128,10 +128,10 @@ export default function MaterialViewer({
     };
 
     const handleCopy = (e: any) => {
-      e.preventDefault()(
-        // Log attempt
-        supabase as any,
-      )
+      e.preventDefault();
+
+      // Log attempt
+      (supabase as any)
         .from("access_logs")
         .insert({
           student_id: studentId,
@@ -158,20 +158,16 @@ export default function MaterialViewer({
       (document as any).removeEventListener("contextmenu", handleContextMenu);
       (document as any).removeEventListener("keydown", handlePrint);
       (document as any).removeEventListener("copy", handleCopy);
-      (document as any)
-        .removeEventListener(
-          "selectstart",
-          handleSelectStart,
-        )(
-          // Log session duration
-          supabase as any,
-        )
+      (document as any).removeEventListener("selectstart", handleSelectStart);
+
+      // Log session duration
+      (supabase as any)
         .from("access_logs")
         .insert({
           student_id: studentId,
           material_id: material.id,
           action: "view",
-          session_duration: 60,
+          session_duration: Math.floor((new Date().getTime() - sessionStart.getTime()) / 1000),
         })
         .then();
     };
