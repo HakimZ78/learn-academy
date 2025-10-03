@@ -63,7 +63,7 @@ export default function ManageMaterialsPage() {
   const handleDelete = async (materialId: string) => {
     if (
       !confirm(
-        "Are you sure you want to delete this material? This will also remove all student assignments.",
+        "Are you sure you want to delete this material? This will also remove all related assignments and logs.",
       )
     ) {
       return;
@@ -71,7 +71,18 @@ export default function ManageMaterialsPage() {
 
     setDeletingId(materialId);
     try {
-      // First delete all student assignments for this material
+      // First delete all access logs for this material
+      const { error: logsError } = await (supabase as any)
+        .from("access_logs")
+        .delete()
+        .eq("material_id", materialId);
+
+      if (logsError) {
+        console.error("Error deleting access logs:", logsError);
+        throw logsError;
+      }
+
+      // Delete all student assignments for this material
       const { error: assignmentsError } = await (supabase as any)
         .from("student_assignments")
         .delete()
@@ -82,19 +93,23 @@ export default function ManageMaterialsPage() {
         throw assignmentsError;
       }
 
-      // Then delete the material itself
+      // Finally delete the material itself
       const { error } = await (supabase as any)
         .from("materials")
         .delete()
         .eq("id", materialId);
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error deleting material:", error);
+        alert(`Failed to delete material: ${error.message || 'Unknown error'}`);
+        throw error;
+      }
 
       // Remove from local state
       setMaterials(materials.filter((m) => m.id !== materialId));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error deleting material:", error);
-      alert("Failed to delete material");
+      alert(`Failed to delete material: ${error.message || 'Unknown error'}`);
     } finally {
       setDeletingId(null);
     }
