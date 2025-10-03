@@ -71,6 +71,18 @@ export default function ManageMaterialsPage() {
 
     setDeletingId(materialId);
     try {
+      // First delete all student assignments for this material
+      const { error: assignmentsError } = await (supabase as any)
+        .from("student_assignments")
+        .delete()
+        .eq("material_id", materialId);
+
+      if (assignmentsError) {
+        console.error("Error deleting student assignments:", assignmentsError);
+        throw assignmentsError;
+      }
+
+      // Then delete the material itself
       const { error } = await (supabase as any)
         .from("materials")
         .delete()
