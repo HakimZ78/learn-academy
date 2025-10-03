@@ -71,38 +71,18 @@ export default function ManageMaterialsPage() {
 
     setDeletingId(materialId);
     try {
-      // First delete all access logs for this material
-      const { error: logsError } = await (supabase as any)
-        .from("access_logs")
-        .delete()
-        .eq("material_id", materialId);
+      const response = await fetch("/api/admin/delete-material", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ materialId }),
+      });
 
-      if (logsError) {
-        console.error("Error deleting access logs:", logsError);
-        throw logsError;
-      }
+      const data = await response.json();
 
-      // Delete all student assignments for this material
-      const { error: assignmentsError } = await (supabase as any)
-        .from("student_assignments")
-        .delete()
-        .eq("material_id", materialId);
-
-      if (assignmentsError) {
-        console.error("Error deleting student assignments:", assignmentsError);
-        throw assignmentsError;
-      }
-
-      // Finally delete the material itself
-      const { error } = await (supabase as any)
-        .from("materials")
-        .delete()
-        .eq("id", materialId);
-
-      if (error) {
-        console.error("Error deleting material:", error);
-        alert(`Failed to delete material: ${error.message || 'Unknown error'}`);
-        throw error;
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to delete material");
       }
 
       // Remove from local state
